@@ -1,0 +1,40 @@
+{
+  "name": "http-asis",
+  "version": "0.0.0",
+  "description": "A NodeJS HTTP module as is",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc --reporter=text mocha test/**/*.js --recursives"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukaportes/http-asis.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "package",
+    "http",
+    "request",
+    "module",
+    "as",
+    "is",
+    "simple"
+  ],
+  "author": "Murilo Portescheller <mport.dev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mukaportes/http-asis/issues"
+  },
+  "homepage": "https://github.com/mukaportes/http-asis#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "faker": "^4.1.0",
+    "mocha": "^7.0.0",
+    "nyc": "^15.0.0",
+    "sinon": "^8.0.2"
+  }
+}
