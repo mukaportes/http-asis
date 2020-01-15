@@ -3,6 +3,33 @@ const https = require('https');
 const queryStringModule = require('querystring');
 const MESSAGES = require('../../application/messages');
 
+const getResponseDefaultValues = (response) => {
+  return {
+    statusCode: response.statusCode,
+    headers: response.headers,
+    url: response.req.options.href,
+    hostname: response.req.options.hostname,
+    queryString: response.req.options.queryString,
+  };
+};
+
+/**
+ * 
+ * @param {string} data stringfied data to be parsed 
+ * @param {object} response HTTP response
+ * @param {boolean} hasResponse flags if response should be returned
+ */
+const buildResponse = ({ data, options, response }) => {
+  const preparedResponse = { 
+    body: JSON.parse(data),
+    ...getResponseDefaultValues(response), 
+  };
+
+  if (options.hasResponse) preparedResponse.response = response;
+
+  return preparedResponse;
+};
+
 /**
  * @param {stirng} url URL to be requested
  * @param {object} options options for the request
@@ -15,7 +42,7 @@ const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, r
   const httpModule = getHttpModule(rawUrl);
   const url = buildUrlWithOptions(rawUrl, options.params, options.queryString);
 
-  return httpModule[method.toLowerCase()](url, preparedOptions, (response) => {
+  return httpModule[method.toLowerCase()](url, options, (response) => {
     let data = '';
 
     const { statusCode } = response;
@@ -23,14 +50,18 @@ const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, r
     if (!isSucessStatusCode(statusCode)) reject(MESSAGES.http.executeRequest.statusCodeError);
 
     response.on('data', (chunk) => data = `${data}${chunk}`);
-    response.on('end', () => resolve({ data: JSON.parse(data) }));
+    response.on('end', () => resolve(buildResponse({ data, options, response })));
   }).on('error', (error) => reject(error.message));
 });
 
 /**
  * @param {string} url url to be validated 
  */
-const isValidUrl = (url) => {};
+const isValidUrl = (url) => {
+  const validation = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
+
+    return validation.test(url);
+};
 
 /**
  * @param {string} method HTTP method to be validated
@@ -53,18 +84,27 @@ const getHttpModule = (url) => {
 };
 
 const buildUrlWithOptions = (url = '', params, queryString) => {
-  const separator = url[url.length + 1] === '/' ? '' : '/';
+  const separator = url[url.length - 1] === '/' ? '' : '/';
   let newUrl = `${url}${separator}`;
 
   if (params) {
     Object.keys(params).forEach((key) => {
-      newUrl = `${newUrl}/${params[key]}`
+      newUrl = `${newUrl}${params[key]}/`;
     });
   }
 
-  if (queryString) newUrl = `${newUrl}?${queryStringModule.encode(queryStringModule)}`;
+  if (queryString) newUrl = `${newUrl}?${queryStringModule.encode(queryString)}`;
 
   return newUrl;
 };
 
-const resolveResponse = (response)
+// const resolveResponse = (response)
+
+module.exports = {
+  executeRequest,
+  isValidUrl,
+  isValidHttpMethod,
+  isSucessStatusCode,
+  getHttpModule,
+  buildUrlWithOptions,
+};
