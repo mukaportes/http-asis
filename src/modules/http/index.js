@@ -5,7 +5,7 @@ const buildHttpModule = () => {
   const newModule = {};
   const httpMethodsKeys = Object.keys(HTTP_METHODS);
 
-  httpMethodsKeys.forEach(method => {
+  httpMethodsKeys.forEach((method) => {
     newModule[method] = (url, options) => executeRequest(
       url, options, httpMethodsKeys[method],
     );

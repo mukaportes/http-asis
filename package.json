@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
     "test": "nyc --reporter=text --reporter=lcov mocha test/**/*.js --recursives"
   },
   "repository": {
@@ -43,10 +44,10 @@
     "all": true,
     "check-coverage": true,
     "per-file": false,
-    "lines": 95,
-    "statements": 95,
-    "functions": 95,
-    "branches": 95,
+    "lines": 90,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
     "include": [
       "src/**/*.js"
     ],
