@@ -4,6 +4,7 @@
   "description": "A NodeJS HTTP module as is",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./src",
     "test": "nyc --reporter=text --reporter=lcov mocha test/**/*.js --recursives"
   },
   "repository": {
