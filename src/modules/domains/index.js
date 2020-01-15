@@ -4,7 +4,9 @@ const getHttpMethods = () => {
   const httpMethods = {};
 
   http.METHODS.forEach((method) => {
-    httpMethods[method.toLowerCase()] = method;
+    const formattedMethod = method.toLowerCase().replace('-', '_');
+
+    httpMethods[formattedMethod] = method;
   });
 
   return httpMethods;

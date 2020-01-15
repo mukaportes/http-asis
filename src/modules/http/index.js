@@ -1,6 +1,17 @@
-// verify statusCode is success
-// 200 <= Number(statusCode) && 300 > Number(statusCode)
-const http = require('http');
-const https = require('https');
 const { HTTP_METHODS } = require('../domains');
+const { executeRequest } = require('./library');
 
+const buildHttpModule = () => {
+  const newModule = {};
+  const httpMethodsKeys = Object.keys(HTTP_METHODS);
+
+  httpMethodsKeys.forEach(method => {
+    newModule[method] = (url, options) => executeRequest(
+      url, options, httpMethodsKeys[method],
+    );
+  });
+
+  return newModule;
+};
+
+module.exports = buildHttpModule();
