@@ -1,7 +1,11 @@
-const Domains = require('./src/modules/domains');
-const HTTP = require('./src/modules/http');
+const domains = require('./src/modules/domains');
+const http = require('./src/modules/http');
+const httpLibrary = require('./src/modules/http/library');
 
 module.exports = {
-  Domains,
-  HTTP,
+  domains,
+  http,
+  library: {
+    http: httpLibrary,
+  }
 };
