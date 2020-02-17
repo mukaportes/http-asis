@@ -1,7 +1,7 @@
 {
   "name": "http-asis",
-  "version": "0.0.0",
-  "description": "A NodeJS HTTP module as is",
+  "version": "0.0.1",
+  "description": "HTTP request module with zero dependencies",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./src",
