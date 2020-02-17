@@ -33,6 +33,12 @@ const getHttpModule = (url) => {
   return https;
 };
 
+/**
+ * 
+ * @param {string} url url to be used and formatted with query string and/or params 
+ * @param {object} params object containing query params ordered as it'd be used
+ * @param {object} queryString object container query strings
+ */
 const buildUrlWithOptions = (url = '', params, queryString) => {
   const separator = url[url.length - 1] === '/' ? '' : '/';
   let newUrl = `${url}${separator}`;
@@ -48,6 +54,10 @@ const buildUrlWithOptions = (url = '', params, queryString) => {
   return newUrl;
 };
 
+/**
+ * 
+ * @param {Response} response HTTP(S) core module Response<>
+ */
 const getResponseDefaultValues = (response) => ({
   statusCode: response.statusCode,
   headers: response.headers,
