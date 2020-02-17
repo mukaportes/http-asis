@@ -1,2 +1,2 @@
 # http-asis
-HTTP As Is - NodeJS HTTP Module
+HTTP As Is - HTTP request module with zero dependencies
