@@ -71,16 +71,11 @@ const getResponseDefaultValues = (response) => ({
  * @param {string} data stringfied data to be parsed
  * @param {object} response HTTP response
  */
-const buildResponse = ({ data, options, response }) => {
-  const preparedResponse = {
-    body: JSON.parse(data),
-    ...getResponseDefaultValues(response),
-  };
-
-  if (options.hasResponse) preparedResponse.response = response;
-
-  return preparedResponse;
-};
+// eslint-disable-next-line prefer-object-spread
+const buildResponse = ({ data = {}, response }) => Object.assign(
+  { body: JSON.parse(data) },
+  getResponseDefaultValues(response),
+);
 
 /**
  * @param {string} url URL to be requested
@@ -97,9 +92,9 @@ const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, r
   return httpModule[method.toLowerCase()](url, options, (response) => {
     let data = '';
 
-    const { statusCode } = response;
-
-    if (!isSucessStatusCode(statusCode)) reject(MESSAGES.http.executeRequest.statusCodeError);
+    if (!isSucessStatusCode(response.statusCode)) {
+      reject(MESSAGES.http.executeRequest.statusCodeError);
+    }
 
     response.on('data', (chunk) => {
       data = `${data}${chunk}`;
