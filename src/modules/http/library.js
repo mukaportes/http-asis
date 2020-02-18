@@ -25,7 +25,7 @@ const isSucessStatusCode = (statusCode) => Number(statusCode) >= 200
   && Number(statusCode) <= 299;
 
 /**
- * @param {stirng} url url to be validated if contains http://
+ * @param {string} url url to be validated if contains http://
  */
 const getHttpModule = (url) => {
   if (url.indexOf('http://') !== -1) return http;
@@ -70,7 +70,6 @@ const getResponseDefaultValues = (response) => ({
  *
  * @param {string} data stringfied data to be parsed
  * @param {object} response HTTP response
- * @param {boolean} hasResponse flags if response should be returned
  */
 const buildResponse = ({ data, options, response }) => {
   const preparedResponse = {
@@ -84,7 +83,7 @@ const buildResponse = ({ data, options, response }) => {
 };
 
 /**
- * @param {stirng} url URL to be requested
+ * @param {string} url URL to be requested
  * @param {object} options options for the request
  * @param {string} method request method
  */
@@ -102,9 +101,8 @@ const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, r
 
     if (!isSucessStatusCode(statusCode)) reject(MESSAGES.http.executeRequest.statusCodeError);
 
-    response.on('data', (chunk) => {
-      data = `${data}${chunk}`;
-    });
+    response.on('data', (chunk) => data = `${data}${chunk}`);
+
     response.on('end', () => resolve(buildResponse({ data, options, response })));
   }).on('error', (error) => reject(error.message));
 });
