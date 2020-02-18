@@ -34,8 +34,8 @@ const getHttpModule = (url) => {
 };
 
 /**
- * 
- * @param {string} url url to be used and formatted with query string and/or params 
+ *
+ * @param {string} url url to be used and formatted with query string and/or params
  * @param {object} params object containing query params ordered as it'd be used
  * @param {object} queryString object container query strings
  */
@@ -55,7 +55,7 @@ const buildUrlWithOptions = (url = '', params, queryString) => {
 };
 
 /**
- * 
+ *
  * @param {Response} response HTTP(S) core module Response<>
  */
 const getResponseDefaultValues = (response) => ({
@@ -101,7 +101,9 @@ const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, r
 
     if (!isSucessStatusCode(statusCode)) reject(MESSAGES.http.executeRequest.statusCodeError);
 
-    response.on('data', (chunk) => data = `${data}${chunk}`);
+    response.on('data', (chunk) => {
+      data = `${data}${chunk}`;
+    });
 
     response.on('end', () => resolve(buildResponse({ data, options, response })));
   }).on('error', (error) => reject(error.message));

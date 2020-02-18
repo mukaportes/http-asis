@@ -110,7 +110,7 @@ describe('HTTP Module Library Tests', () => {
     });
   });
   describe('executeRequest()', () => {
-    let basePath = 'https://google.com';
+    const basePath = 'https://google.com';
     const generateRandomObject = () => ({ [faker.random.uuid()]: faker.random.words() });
 
     describe('when input is valid', () => {
@@ -123,8 +123,7 @@ describe('HTTP Module Library Tests', () => {
           nock(basePath)
             .get('/')
             .query(queryString)
-
-            .reply(statusCode, responseBody)
+            .reply(statusCode, responseBody);
 
           const response = await httpModule.executeRequest(
             `${basePath}/`, { queryString }, HTTP_METHODS.get,
@@ -148,7 +147,7 @@ describe('HTTP Module Library Tests', () => {
             .get('/')
             .query(queryString)
 
-            .reply(statusCode, responseBody)
+            .reply(statusCode, responseBody);
 
           const response = await httpModule.executeRequest(
             `${basePath}/`, { queryString }, HTTP_METHODS.get,
@@ -172,7 +171,7 @@ describe('HTTP Module Library Tests', () => {
             `${faker.random.word()}/`, undefined, HTTP_METHODS.get,
           );
         } catch (error) {
-          assert.deepEqual(error, MESSAGES.http.executeRequest.invalidUrl)
+          assert.deepEqual(error, MESSAGES.http.executeRequest.invalidUrl);
         }
       });
       it('rejects promise with error when response status code is not 2XX', async () => {
@@ -184,13 +183,13 @@ describe('HTTP Module Library Tests', () => {
             .get('/')
             .query(queryString)
 
-            .reply(400, responseBody)
+            .reply(400, responseBody);
 
           await httpModule.executeRequest(
             `${basePath}/`, { queryString, hasResponse: true }, HTTP_METHODS.get,
           );
         } catch (error) {
-          assert.deepEqual(error, MESSAGES.http.executeRequest.statusCodeError)
+          assert.deepEqual(error, MESSAGES.http.executeRequest.statusCodeError);
         }
       });
       it('rejects promise with error when http method given is invalid', async () => {
@@ -199,7 +198,7 @@ describe('HTTP Module Library Tests', () => {
             `${basePath}/`, {}, faker.name.findName(),
           );
         } catch (error) {
-          assert.deepEqual(error, MESSAGES.http.executeRequest.invalidMethod)
+          assert.deepEqual(error, MESSAGES.http.executeRequest.invalidMethod);
         }
       });
     });
