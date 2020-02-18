@@ -59,11 +59,11 @@ const buildUrlWithOptions = (url = '', params, queryString) => {
  * @param {Response} response HTTP(S) core module Response<>
  */
 const getResponseDefaultValues = (response) => ({
-  statusCode: response.statusCode,
   headers: response.headers,
-  url: response.req.options.href,
-  hostname: response.req.options.hostname,
-  queryString: response.req.options.queryString,
+  host: response.client.servername,
+  method: response.req.method,
+  path: response.req.path,
+  statusCode: response.statusCode,
 });
 
 /**
