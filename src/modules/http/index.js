@@ -7,7 +7,7 @@ const buildHttpModule = () => {
 
   httpMethodsKeys.forEach((method) => {
     newModule[method] = (url, options) => executeRequest(
-      url, options, httpMethodsKeys[method],
+      url, options, method,
     );
   });
 
