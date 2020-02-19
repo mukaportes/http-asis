@@ -129,10 +129,9 @@ describe('HTTP Module Library Tests', () => {
             `${basePath}/`, { queryString }, HTTP_METHODS.get,
           );
 
-          assert.hasAnyDeepKeys(response, ['body', 'statusCode', 'headers', 'url', 'hostname', 'queryString']);
+          assert.hasAnyDeepKeys(response, ['body', 'headers', 'host', 'method', 'path', 'statusCode']);
           assert.deepEqual(response.body, responseBody);
           assert.deepEqual(response.statusCode, statusCode);
-          assert.deepEqual(response.queryString, queryString);
         } catch (error) {
           throw new Error(error);
         }
@@ -153,12 +152,9 @@ describe('HTTP Module Library Tests', () => {
             `${basePath}/`, { queryString }, HTTP_METHODS.get,
           );
 
-          assert.hasAnyDeepKeys(response, [
-            'body', 'statusCode', 'headers', 'url', 'hostname', 'queryString', 'response',
-          ]);
+          assert.hasAnyDeepKeys(response, ['body', 'headers', 'host', 'method', 'path', 'statusCode']);
           assert.deepEqual(response.body, responseBody);
           assert.deepEqual(response.statusCode, statusCode);
-          assert.deepEqual(response.queryString, queryString);
         } catch (error) {
           throw new Error(error);
         }
