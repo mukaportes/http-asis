@@ -87,14 +87,15 @@ const buildResponse = ({ data, options, response }) => {
  * @param {object} options options for the request
  * @param {string} method request method
  */
-const executeRequest = (rawUrl, options = {}, method) => new Promise((resolve, reject) => {
-  if (!isValidUrl(rawUrl)) reject(MESSAGES.http.executeRequest.invalidUrl);
+const executeRequest = (url, options = {}, method) => new Promise((resolve, reject) => {
+  if (!isValidUrl(url)) reject(MESSAGES.http.executeRequest.invalidUrl);
   if (!isValidHttpMethod(method)) reject(MESSAGES.http.executeRequest.invalidMethod);
 
-  const httpModule = getHttpModule(rawUrl);
-  const url = buildUrlWithOptions(rawUrl, options.params, options.queryString);
+  const httpModule = getHttpModule(url);
+  const preparedUrl = buildUrlWithOptions(url, options.params, options.queryString);
+  const preparedOptions = { ...options, method };
 
-  return httpModule[method.toLowerCase()](url, options, (response) => {
+  return httpModule.request(preparedUrl, preparedOptions, (response) => {
     let data = '';
 
     const { statusCode } = response;
